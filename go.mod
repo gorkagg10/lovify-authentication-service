@@ -1,4 +1,4 @@
-module lovify-auth-service
+module github.com/gorkagg10/lovify-authentication-service.git
 
 go 1.24.1
 
