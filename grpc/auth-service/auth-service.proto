@@ -1,0 +1,16 @@
+edition = "2023";
+
+import "google/protobuf/empty.proto";
+
+option go_package = "lovify-auth/service";
+package lovify_auth_service;
+
+service AuthService {
+  rpc RegisterUser(RegisterRequest) returns (google.protobuf.Empty);
+}
+
+message RegisterRequest {
+  string username = 1;
+  string password = 2;
+}
+
