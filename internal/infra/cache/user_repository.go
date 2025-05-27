@@ -2,7 +2,7 @@ package cache
 
 import (
 	"fmt"
-	"github.com/gorkagg10/lovify-authentication-service.git/internal/domain/login"
+	"github.com/gorkagg10/lovify-authentication-service/internal/domain/login"
 )
 
 type UserRepository struct {

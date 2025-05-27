@@ -5,8 +5,8 @@ import (
 
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	authServiceGrpc "github.com/gorkagg10/lovify-authentication-service.git/grpc/auth-service"
-	"github.com/gorkagg10/lovify-authentication-service.git/internal/domain/login"
+	authServiceGrpc "github.com/gorkagg10/lovify-authentication-service/grpc/auth-service"
+	"github.com/gorkagg10/lovify-authentication-service/internal/domain/login"
 )
 
 type AuthServer struct {

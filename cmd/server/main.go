@@ -8,11 +8,11 @@ import (
 
 	"google.golang.org/grpc"
 
-	service "github.com/gorkagg10/lovify-authentication-service.git/grpc/auth-service"
-	"github.com/gorkagg10/lovify-authentication-service.git/internal/domain/login"
-	"github.com/gorkagg10/lovify-authentication-service.git/internal/infra/base64"
-	"github.com/gorkagg10/lovify-authentication-service.git/internal/infra/cache"
-	"github.com/gorkagg10/lovify-authentication-service.git/internal/infra/server"
+	service "github.com/gorkagg10/lovify-authentication-service/grpc/auth-service"
+	"github.com/gorkagg10/lovify-authentication-service/internal/domain/login"
+	"github.com/gorkagg10/lovify-authentication-service/internal/infra/base64"
+	"github.com/gorkagg10/lovify-authentication-service/internal/infra/cache"
+	"github.com/gorkagg10/lovify-authentication-service/internal/infra/server"
 )
 
 func main() {
