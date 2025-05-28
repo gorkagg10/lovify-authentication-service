@@ -28,7 +28,14 @@ func (u *UserRepository) GetUser(username string) (*login.User, error) {
 	return login.NewUser(user.Username(), user.HashedPassword()), nil
 }
 
-func (u *UserRepository) StoreUser(user *login.User) error {
-	u.database[user.Username()] = NewUser(user.Username(), user.HashedPassword(), user.SessionToken(), user.CSRFToken())
+func (u *UserRepository) CreateUser(user *login.User) error {
+	u.database[user.Username()] = *NewUser(user.Username(), user.HashedPassword(), nil, nil)
+	return nil
+}
+
+func (u *UserRepository) UpdateUser(user *login.User) error {
+	sessionToken := NewToken(user.SessionToken().Token(), user.SessionToken().ExpirationDate())
+	csrfToken := NewToken(user.CSRFToken().Token(), user.CSRFToken().ExpirationDate())
+	u.database[user.Username()] = *NewUser(user.Username(), user.HashedPassword(), sessionToken, csrfToken)
 	return nil
 }

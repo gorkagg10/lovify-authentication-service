@@ -1,18 +1,20 @@
 package cache
 
+import "time"
+
 type User struct {
 	username       string
 	hashedPassword string
-	sessionToken   string
-	csrfToken      string
+	sessionToken   *Token
+	csrfToken      *Token
 }
 
 func NewUser(
 	username string,
 	hashedPassword string,
-	sessionToken string,
-	csrfToken string) User {
-	return User{
+	sessionToken *Token,
+	csrfToken *Token) *User {
+	return &User{
 		username:       username,
 		hashedPassword: hashedPassword,
 		sessionToken:   sessionToken,
@@ -26,4 +28,16 @@ func (u *User) Username() string {
 
 func (u *User) HashedPassword() string {
 	return u.hashedPassword
+}
+
+type Token struct {
+	token          string
+	expirationDate time.Time
+}
+
+func NewToken(token string, expirationDate time.Time) *Token {
+	return &Token{
+		token:          token,
+		expirationDate: expirationDate,
+	}
 }

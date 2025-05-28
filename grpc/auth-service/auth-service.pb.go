@@ -10,6 +10,7 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -74,16 +75,182 @@ func (x *RegisterRequest) GetPassword() string {
 	return ""
 }
 
+type LoginRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      *string                `protobuf:"bytes,1,opt,name=username" json:"username,omitempty"`
+	Password      *string                `protobuf:"bytes,2,opt,name=password" json:"password,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoginRequest) Reset() {
+	*x = LoginRequest{}
+	mi := &file_grpc_auth_service_auth_service_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoginRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginRequest) ProtoMessage() {}
+
+func (x *LoginRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_grpc_auth_service_auth_service_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginRequest.ProtoReflect.Descriptor instead.
+func (*LoginRequest) Descriptor() ([]byte, []int) {
+	return file_grpc_auth_service_auth_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *LoginRequest) GetUsername() string {
+	if x != nil && x.Username != nil {
+		return *x.Username
+	}
+	return ""
+}
+
+func (x *LoginRequest) GetPassword() string {
+	if x != nil && x.Password != nil {
+		return *x.Password
+	}
+	return ""
+}
+
+type LoginResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionToken  *Token                 `protobuf:"bytes,1,opt,name=sessionToken" json:"sessionToken,omitempty"`
+	CsrfToken     *Token                 `protobuf:"bytes,2,opt,name=csrfToken" json:"csrfToken,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoginResponse) Reset() {
+	*x = LoginResponse{}
+	mi := &file_grpc_auth_service_auth_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoginResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginResponse) ProtoMessage() {}
+
+func (x *LoginResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_grpc_auth_service_auth_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginResponse.ProtoReflect.Descriptor instead.
+func (*LoginResponse) Descriptor() ([]byte, []int) {
+	return file_grpc_auth_service_auth_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *LoginResponse) GetSessionToken() *Token {
+	if x != nil {
+		return x.SessionToken
+	}
+	return nil
+}
+
+func (x *LoginResponse) GetCsrfToken() *Token {
+	if x != nil {
+		return x.CsrfToken
+	}
+	return nil
+}
+
+type Token struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Token          *string                `protobuf:"bytes,1,opt,name=token" json:"token,omitempty"`
+	ExpirationDate *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=expirationDate" json:"expirationDate,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *Token) Reset() {
+	*x = Token{}
+	mi := &file_grpc_auth_service_auth_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Token) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Token) ProtoMessage() {}
+
+func (x *Token) ProtoReflect() protoreflect.Message {
+	mi := &file_grpc_auth_service_auth_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Token.ProtoReflect.Descriptor instead.
+func (*Token) Descriptor() ([]byte, []int) {
+	return file_grpc_auth_service_auth_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *Token) GetToken() string {
+	if x != nil && x.Token != nil {
+		return *x.Token
+	}
+	return ""
+}
+
+func (x *Token) GetExpirationDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExpirationDate
+	}
+	return nil
+}
+
 var File_grpc_auth_service_auth_service_proto protoreflect.FileDescriptor
 
 const file_grpc_auth_service_auth_service_proto_rawDesc = "" +
 	"\n" +
-	"$grpc/auth-service/auth-service.proto\x12\x13lovify_auth_service\x1a\x1bgoogle/protobuf/empty.proto\"I\n" +
+	"$grpc/auth-service/auth-service.proto\x12\x13lovify_auth_service\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"I\n" +
 	"\x0fRegisterRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword2[\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"F\n" +
+	"\fLoginRequest\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"\x89\x01\n" +
+	"\rLoginResponse\x12>\n" +
+	"\fsessionToken\x18\x01 \x01(\v2\x1a.lovify_auth_service.TokenR\fsessionToken\x128\n" +
+	"\tcsrfToken\x18\x02 \x01(\v2\x1a.lovify_auth_service.TokenR\tcsrfToken\"a\n" +
+	"\x05Token\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12B\n" +
+	"\x0eexpirationDate\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0eexpirationDate2\xab\x01\n" +
 	"\vAuthService\x12L\n" +
-	"\fRegisterUser\x12$.lovify_auth_service.RegisterRequest\x1a\x16.google.protobuf.EmptyB\x15Z\x13lovify-auth/serviceb\beditionsp\xe8\a"
+	"\fRegisterUser\x12$.lovify_auth_service.RegisterRequest\x1a\x16.google.protobuf.Empty\x12N\n" +
+	"\x05Login\x12!.lovify_auth_service.LoginRequest\x1a\".lovify_auth_service.LoginResponseB\x15Z\x13lovify-auth/serviceb\beditionsp\xe8\a"
 
 var (
 	file_grpc_auth_service_auth_service_proto_rawDescOnce sync.Once
@@ -97,19 +264,28 @@ func file_grpc_auth_service_auth_service_proto_rawDescGZIP() []byte {
 	return file_grpc_auth_service_auth_service_proto_rawDescData
 }
 
-var file_grpc_auth_service_auth_service_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_grpc_auth_service_auth_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_grpc_auth_service_auth_service_proto_goTypes = []any{
-	(*RegisterRequest)(nil), // 0: lovify_auth_service.RegisterRequest
-	(*emptypb.Empty)(nil),   // 1: google.protobuf.Empty
+	(*RegisterRequest)(nil),       // 0: lovify_auth_service.RegisterRequest
+	(*LoginRequest)(nil),          // 1: lovify_auth_service.LoginRequest
+	(*LoginResponse)(nil),         // 2: lovify_auth_service.LoginResponse
+	(*Token)(nil),                 // 3: lovify_auth_service.Token
+	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),         // 5: google.protobuf.Empty
 }
 var file_grpc_auth_service_auth_service_proto_depIdxs = []int32{
-	0, // 0: lovify_auth_service.AuthService.RegisterUser:input_type -> lovify_auth_service.RegisterRequest
-	1, // 1: lovify_auth_service.AuthService.RegisterUser:output_type -> google.protobuf.Empty
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	3, // 0: lovify_auth_service.LoginResponse.sessionToken:type_name -> lovify_auth_service.Token
+	3, // 1: lovify_auth_service.LoginResponse.csrfToken:type_name -> lovify_auth_service.Token
+	4, // 2: lovify_auth_service.Token.expirationDate:type_name -> google.protobuf.Timestamp
+	0, // 3: lovify_auth_service.AuthService.RegisterUser:input_type -> lovify_auth_service.RegisterRequest
+	1, // 4: lovify_auth_service.AuthService.Login:input_type -> lovify_auth_service.LoginRequest
+	5, // 5: lovify_auth_service.AuthService.RegisterUser:output_type -> google.protobuf.Empty
+	2, // 6: lovify_auth_service.AuthService.Login:output_type -> lovify_auth_service.LoginResponse
+	5, // [5:7] is the sub-list for method output_type
+	3, // [3:5] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_grpc_auth_service_auth_service_proto_init() }
@@ -123,7 +299,7 @@ func file_grpc_auth_service_auth_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_grpc_auth_service_auth_service_proto_rawDesc), len(file_grpc_auth_service_auth_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

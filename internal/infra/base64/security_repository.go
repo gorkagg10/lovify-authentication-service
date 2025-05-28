@@ -3,7 +3,9 @@ package base64
 import (
 	"crypto/rand"
 	"encoding/base64"
+	"github.com/gorkagg10/lovify-authentication-service/internal/domain/login"
 	"log/slog"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -25,11 +27,12 @@ func (t *SecurityRepository) HashPassword(password string) (string, error) {
 	return string(passwordBytes), nil
 }
 
-func (t *SecurityRepository) GenerateToken() (string, error) {
+func (t *SecurityRepository) GenerateToken() (*login.Token, error) {
 	bytes := make([]byte, tokenLength)
 	if _, err := rand.Read(bytes); err != nil {
 		slog.Error("generating token", slog.String("error", err.Error()))
-		return "", err
+		return nil, err
 	}
-	return base64.URLEncoding.EncodeToString(bytes), nil
+	token := base64.URLEncoding.EncodeToString(bytes)
+	return login.NewToken(token, time.Now().Add(time.Hour*24)), nil
 }

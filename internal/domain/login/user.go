@@ -4,8 +4,8 @@ type User struct {
 	id             string
 	username       string
 	hashedPassword string
-	sessionToken   string
-	csrfToken      string
+	sessionToken   *Token
+	csrfToken      *Token
 }
 
 func NewUser(username string, hashedPassword string) *User {
@@ -23,18 +23,18 @@ func (u *User) HashedPassword() string {
 	return u.hashedPassword
 }
 
-func (u *User) SessionToken() string {
+func (u *User) SessionToken() *Token {
 	return u.sessionToken
 }
 
-func (u *User) CSRFToken() string {
+func (u *User) CSRFToken() *Token {
 	return u.csrfToken
 }
 
-func (u *User) setSessionToken(sessionToken string) {
+func (u *User) setSessionToken(sessionToken *Token) {
 	u.sessionToken = sessionToken
 }
 
-func (u *User) setCSRFToken(csrfToken string) {
+func (u *User) setCSRFToken(csrfToken *Token) {
 	u.csrfToken = csrfToken
 }

@@ -29,32 +29,32 @@ func (a *Authentication) Register(username string, password string) error {
 		return fmt.Errorf("hashing password: %w", err)
 	}
 	user := NewUser(username, hashedPassword)
-	if err = a.userRepository.StoreUser(user); err != nil {
+	if err = a.userRepository.CreateUser(user); err != nil {
 		return fmt.Errorf("storing user: %w", err)
 	}
 	return nil
 }
 
-func (a *Authentication) Login(username string) error {
+func (a *Authentication) Login(username string, password string) (*User, error) {
 	user, err := a.userRepository.GetUser(username)
 	if err != nil {
-		return fmt.Errorf("getting user: %w", err)
+		return nil, fmt.Errorf("getting user: %w", err)
 	}
 
 	sessionToken, err := a.TokenRepository.GenerateToken()
 	if err != nil {
-		return fmt.Errorf("generating session token: %w", err)
+		return nil, fmt.Errorf("generating session token: %w", err)
 	}
 	user.setSessionToken(sessionToken)
 
 	csrfToken, err := a.TokenRepository.GenerateToken()
 	if err != nil {
-		return fmt.Errorf("generating session token: %w", err)
+		return nil, fmt.Errorf("generating session token: %w", err)
 	}
 	user.setCSRFToken(csrfToken)
 
-	if err = a.userRepository.StoreUser(user); err != nil {
-		return fmt.Errorf("storing user: %w", err)
+	if err = a.userRepository.UpdateUser(user); err != nil {
+		return nil, fmt.Errorf("storing user: %w", err)
 	}
-	return nil
+	return user, nil
 }

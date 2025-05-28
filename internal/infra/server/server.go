@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"google.golang.org/protobuf/types/known/emptypb"
 
@@ -26,4 +27,21 @@ func (s *AuthServer) RegisterUser(_ context.Context, req *authServiceGrpc.Regist
 		return nil, err
 	}
 	return &emptypb.Empty{}, nil
+}
+
+func (s *AuthServer) Login(_ context.Context, req *authServiceGrpc.LoginRequest) (*authServiceGrpc.LoginResponse, error) {
+	user, err := s.authenticationService.Login(req.GetUsername())
+	if err != nil {
+		return nil, err
+	}
+	return &authServiceGrpc.LoginResponse{
+		SessionToken: &authServiceGrpc.Token{
+			Token:          user.SessionToken().Token(),
+			ExpirationDate: timestamppb.New(user.SessionToken().ExpirationDate()),
+		},
+		CsrfToken: &authServiceGrpc.Token{
+			Token:          user.CSRFToken().Token(),
+			ExpirationDate: timestamppb.New(user.CSRFToken().ExpirationDate()),
+		},
+	}, nil
 }
