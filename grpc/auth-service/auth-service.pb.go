@@ -231,6 +231,66 @@ func (x *Token) GetExpirationDate() *timestamppb.Timestamp {
 	return nil
 }
 
+type AuthorizationRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      *string                `protobuf:"bytes,1,opt,name=username" json:"username,omitempty"`
+	SessionToken  *string                `protobuf:"bytes,2,opt,name=sessionToken" json:"sessionToken,omitempty"`
+	CsrfToken     *string                `protobuf:"bytes,3,opt,name=csrfToken" json:"csrfToken,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AuthorizationRequest) Reset() {
+	*x = AuthorizationRequest{}
+	mi := &file_grpc_auth_service_auth_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AuthorizationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AuthorizationRequest) ProtoMessage() {}
+
+func (x *AuthorizationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_grpc_auth_service_auth_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AuthorizationRequest.ProtoReflect.Descriptor instead.
+func (*AuthorizationRequest) Descriptor() ([]byte, []int) {
+	return file_grpc_auth_service_auth_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *AuthorizationRequest) GetUsername() string {
+	if x != nil && x.Username != nil {
+		return *x.Username
+	}
+	return ""
+}
+
+func (x *AuthorizationRequest) GetSessionToken() string {
+	if x != nil && x.SessionToken != nil {
+		return *x.SessionToken
+	}
+	return ""
+}
+
+func (x *AuthorizationRequest) GetCsrfToken() string {
+	if x != nil && x.CsrfToken != nil {
+		return *x.CsrfToken
+	}
+	return ""
+}
+
 var File_grpc_auth_service_auth_service_proto protoreflect.FileDescriptor
 
 const file_grpc_auth_service_auth_service_proto_rawDesc = "" +
@@ -247,10 +307,15 @@ const file_grpc_auth_service_auth_service_proto_rawDesc = "" +
 	"\tcsrfToken\x18\x02 \x01(\v2\x1a.lovify_auth_service.TokenR\tcsrfToken\"a\n" +
 	"\x05Token\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12B\n" +
-	"\x0eexpirationDate\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0eexpirationDate2\xab\x01\n" +
+	"\x0eexpirationDate\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0eexpirationDate\"t\n" +
+	"\x14AuthorizationRequest\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\"\n" +
+	"\fsessionToken\x18\x02 \x01(\tR\fsessionToken\x12\x1c\n" +
+	"\tcsrfToken\x18\x03 \x01(\tR\tcsrfToken2\xfb\x01\n" +
 	"\vAuthService\x12L\n" +
 	"\fRegisterUser\x12$.lovify_auth_service.RegisterRequest\x1a\x16.google.protobuf.Empty\x12N\n" +
-	"\x05Login\x12!.lovify_auth_service.LoginRequest\x1a\".lovify_auth_service.LoginResponseB\x15Z\x13lovify-auth/serviceb\beditionsp\xe8\a"
+	"\x05Login\x12!.lovify_auth_service.LoginRequest\x1a\".lovify_auth_service.LoginResponse\x12N\n" +
+	"\tAuthorize\x12).lovify_auth_service.AuthorizationRequest\x1a\x16.google.protobuf.EmptyB\x15Z\x13lovify-auth/serviceb\beditionsp\xe8\a"
 
 var (
 	file_grpc_auth_service_auth_service_proto_rawDescOnce sync.Once
@@ -264,25 +329,28 @@ func file_grpc_auth_service_auth_service_proto_rawDescGZIP() []byte {
 	return file_grpc_auth_service_auth_service_proto_rawDescData
 }
 
-var file_grpc_auth_service_auth_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_grpc_auth_service_auth_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_grpc_auth_service_auth_service_proto_goTypes = []any{
 	(*RegisterRequest)(nil),       // 0: lovify_auth_service.RegisterRequest
 	(*LoginRequest)(nil),          // 1: lovify_auth_service.LoginRequest
 	(*LoginResponse)(nil),         // 2: lovify_auth_service.LoginResponse
 	(*Token)(nil),                 // 3: lovify_auth_service.Token
-	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),         // 5: google.protobuf.Empty
+	(*AuthorizationRequest)(nil),  // 4: lovify_auth_service.AuthorizationRequest
+	(*timestamppb.Timestamp)(nil), // 5: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),         // 6: google.protobuf.Empty
 }
 var file_grpc_auth_service_auth_service_proto_depIdxs = []int32{
 	3, // 0: lovify_auth_service.LoginResponse.sessionToken:type_name -> lovify_auth_service.Token
 	3, // 1: lovify_auth_service.LoginResponse.csrfToken:type_name -> lovify_auth_service.Token
-	4, // 2: lovify_auth_service.Token.expirationDate:type_name -> google.protobuf.Timestamp
+	5, // 2: lovify_auth_service.Token.expirationDate:type_name -> google.protobuf.Timestamp
 	0, // 3: lovify_auth_service.AuthService.RegisterUser:input_type -> lovify_auth_service.RegisterRequest
 	1, // 4: lovify_auth_service.AuthService.Login:input_type -> lovify_auth_service.LoginRequest
-	5, // 5: lovify_auth_service.AuthService.RegisterUser:output_type -> google.protobuf.Empty
-	2, // 6: lovify_auth_service.AuthService.Login:output_type -> lovify_auth_service.LoginResponse
-	5, // [5:7] is the sub-list for method output_type
-	3, // [3:5] is the sub-list for method input_type
+	4, // 5: lovify_auth_service.AuthService.Authorize:input_type -> lovify_auth_service.AuthorizationRequest
+	6, // 6: lovify_auth_service.AuthService.RegisterUser:output_type -> google.protobuf.Empty
+	2, // 7: lovify_auth_service.AuthService.Login:output_type -> lovify_auth_service.LoginResponse
+	6, // 8: lovify_auth_service.AuthService.Authorize:output_type -> google.protobuf.Empty
+	6, // [6:9] is the sub-list for method output_type
+	3, // [3:6] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
 	3, // [3:3] is the sub-list for extension extendee
 	0, // [0:3] is the sub-list for field type_name
@@ -299,7 +367,7 @@ func file_grpc_auth_service_auth_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_grpc_auth_service_auth_service_proto_rawDesc), len(file_grpc_auth_service_auth_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

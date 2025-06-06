@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/gorkagg10/lovify-authentication-service/config"
+	"github.com/gorkagg10/lovify-authentication-service/database"
 	"log/slog"
 	"net"
 	"os"
@@ -17,6 +19,18 @@ import (
 
 func main() {
 	port := 8081
+
+	conf, err := config.NewConfig()
+	if err != nil {
+		slog.Error("loading configuration", slog.String("error", err.Error()))
+		os.Exit(1)
+	}
+
+	err = database.Migrate(conf.DatabaseConfig)
+	if err != nil {
+		slog.Error("migrating database", slog.String("error", err.Error()))
+		os.Exit(1)
+	}
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
@@ -44,6 +58,6 @@ func setupAuthServer() *server.AuthServer {
 	userRepository := cache.NewUserRepository(map[string]cache.User{})
 	securityRepository := base64.NewSecurityRepository()
 
-	authenticationService := login.NewAuthentication(userRepository, securityRepository)
+	authenticationService := login.NewAuthorization(userRepository, securityRepository)
 	return server.NewAuthServer(authenticationService)
 }

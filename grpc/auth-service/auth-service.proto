@@ -9,6 +9,7 @@ package lovify_auth_service;
 service AuthService {
   rpc RegisterUser(RegisterRequest) returns (google.protobuf.Empty);
   rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Authorize(AuthorizationRequest) returns (google.protobuf.Empty);
 }
 
 message RegisterRequest {
@@ -29,4 +30,10 @@ message LoginResponse {
 message Token {
   string token = 1;
   google.protobuf.Timestamp expirationDate = 2;
+}
+
+message AuthorizationRequest {
+  string username = 1;
+  string sessionToken = 2;
+  string csrfToken = 3;
 }

@@ -36,3 +36,11 @@ func (t *SecurityRepository) GenerateToken() (*login.Token, error) {
 	token := base64.URLEncoding.EncodeToString(bytes)
 	return login.NewToken(token, time.Now().Add(time.Hour*24)), nil
 }
+
+func (t *SecurityRepository) CheckPassword(hashedPassword string, password string) (bool, error) {
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
