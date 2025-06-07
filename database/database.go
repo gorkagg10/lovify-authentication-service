@@ -1,6 +1,8 @@
 package database
 
 import (
+	"context"
+	"database/sql"
 	"errors"
 	"fmt"
 
@@ -33,4 +35,19 @@ func Migrate(databaseConfig *config.DatabaseConfig) error {
 		return dbError
 	}
 	return nil
+}
+
+func NewDatabaseClient(ctx context.Context, databaseConfig *config.DatabaseConfig) (*sql.DB, error) {
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		databaseConfig.Host, databaseConfig.Port, databaseConfig.Username, databaseConfig.Password,
+		databaseConfig.Database, databaseConfig.SSLMode)
+	db, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		return nil, fmt.Errorf("opening database connection: %w", err)
+	}
+	err = db.PingContext(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("pinging database connection: %w", err)
+	}
+	return db, nil
 }

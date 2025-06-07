@@ -22,16 +22,16 @@ func NewAuthServer(authenticationService *login.Authorization) *AuthServer {
 	}
 }
 
-func (s *AuthServer) RegisterUser(_ context.Context, req *authServiceGrpc.RegisterRequest) (*emptypb.Empty, error) {
-	err := s.authenticationService.Register(req.GetUsername(), req.GetPassword())
+func (s *AuthServer) RegisterUser(ctx context.Context, req *authServiceGrpc.RegisterRequest) (*emptypb.Empty, error) {
+	err := s.authenticationService.Register(ctx, req.GetUsername(), req.GetPassword())
 	if err != nil {
 		return nil, err
 	}
 	return &emptypb.Empty{}, nil
 }
 
-func (s *AuthServer) Login(_ context.Context, req *authServiceGrpc.LoginRequest) (*authServiceGrpc.LoginResponse, error) {
-	user, err := s.authenticationService.Login(req.GetUsername(), req.GetPassword())
+func (s *AuthServer) Login(ctx context.Context, req *authServiceGrpc.LoginRequest) (*authServiceGrpc.LoginResponse, error) {
+	user, err := s.authenticationService.Login(ctx, req.GetUsername(), req.GetPassword())
 	if err != nil {
 		return nil, err
 	}
@@ -47,8 +47,8 @@ func (s *AuthServer) Login(_ context.Context, req *authServiceGrpc.LoginRequest)
 	}, nil
 }
 
-func (s *AuthServer) Authorize(_ context.Context, req *authServiceGrpc.AuthorizationRequest) (*emptypb.Empty, error) {
-	err := s.authenticationService.Authorize(req.GetUsername(), req.GetSessionToken(), req.GetCsrfToken())
+func (s *AuthServer) Authorize(ctx context.Context, req *authServiceGrpc.AuthorizationRequest) (*emptypb.Empty, error) {
+	err := s.authenticationService.AuthorizeUser(ctx, req.GetUsername(), req.GetSessionToken(), req.GetCsrfToken())
 	if err != nil {
 		return nil, err
 	}

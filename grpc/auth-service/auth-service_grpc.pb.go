@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	AuthService_RegisterUser_FullMethodName = "/lovify_auth_service.AuthService/RegisterUser"
 	AuthService_Login_FullMethodName        = "/lovify_auth_service.AuthService/Login"
-	AuthService_Authorize_FullMethodName    = "/lovify_auth_service.AuthService/Authorize"
+	AuthService_Authorize_FullMethodName    = "/lovify_auth_service.AuthService/AuthorizeUser"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -96,7 +96,7 @@ func (UnimplementedAuthServiceServer) Login(context.Context, *LoginRequest) (*Lo
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
 func (UnimplementedAuthServiceServer) Authorize(context.Context, *AuthorizationRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Authorize not implemented")
+	return nil, status.Errorf(codes.Unimplemented, "method AuthorizeUser not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -189,7 +189,7 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AuthService_Login_Handler,
 		},
 		{
-			MethodName: "Authorize",
+			MethodName: "AuthorizeUser",
 			Handler:    _AuthService_Authorize_Handler,
 		},
 	},

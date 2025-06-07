@@ -5,20 +5,14 @@ import "time"
 type User struct {
 	username       string
 	hashedPassword string
-	sessionToken   *Token
-	csrfToken      *Token
 }
 
 func NewUser(
 	username string,
-	hashedPassword string,
-	sessionToken *Token,
-	csrfToken *Token) *User {
+	hashedPassword string) *User {
 	return &User{
 		username:       username,
 		hashedPassword: hashedPassword,
-		sessionToken:   sessionToken,
-		csrfToken:      csrfToken,
 	}
 }
 
@@ -33,11 +27,13 @@ func (u *User) HashedPassword() string {
 type Token struct {
 	token          string
 	expirationDate time.Time
+	username       string
 }
 
-func NewToken(token string, expirationDate time.Time) *Token {
+func NewToken(token string, expirationDate time.Time, username string) *Token {
 	return &Token{
 		token:          token,
 		expirationDate: expirationDate,
+		username:       username,
 	}
 }

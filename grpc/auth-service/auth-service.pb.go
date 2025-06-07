@@ -345,10 +345,10 @@ var file_grpc_auth_service_auth_service_proto_depIdxs = []int32{
 	5, // 2: lovify_auth_service.Token.expirationDate:type_name -> google.protobuf.Timestamp
 	0, // 3: lovify_auth_service.AuthService.RegisterUser:input_type -> lovify_auth_service.RegisterRequest
 	1, // 4: lovify_auth_service.AuthService.Login:input_type -> lovify_auth_service.LoginRequest
-	4, // 5: lovify_auth_service.AuthService.Authorize:input_type -> lovify_auth_service.AuthorizationRequest
+	4, // 5: lovify_auth_service.AuthService.AuthorizeUser:input_type -> lovify_auth_service.AuthorizationRequest
 	6, // 6: lovify_auth_service.AuthService.RegisterUser:output_type -> google.protobuf.Empty
 	2, // 7: lovify_auth_service.AuthService.Login:output_type -> lovify_auth_service.LoginResponse
-	6, // 8: lovify_auth_service.AuthService.Authorize:output_type -> google.protobuf.Empty
+	6, // 8: lovify_auth_service.AuthService.AuthorizeUser:output_type -> google.protobuf.Empty
 	6, // [6:9] is the sub-list for method output_type
 	3, // [3:6] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name

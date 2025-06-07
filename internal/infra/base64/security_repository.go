@@ -27,14 +27,14 @@ func (t *SecurityRepository) HashPassword(password string) (string, error) {
 	return string(passwordBytes), nil
 }
 
-func (t *SecurityRepository) GenerateToken() (*login.Token, error) {
+func (t *SecurityRepository) GenerateToken(tokenType string) (*login.Token, error) {
 	bytes := make([]byte, tokenLength)
 	if _, err := rand.Read(bytes); err != nil {
 		slog.Error("generating token", slog.String("error", err.Error()))
 		return nil, err
 	}
 	token := base64.URLEncoding.EncodeToString(bytes)
-	return login.NewToken(token, time.Now().Add(time.Hour*24)), nil
+	return login.NewToken(token, tokenType, time.Now().Add(time.Hour*24)), nil
 }
 
 func (t *SecurityRepository) CheckPassword(hashedPassword string, password string) (bool, error) {
