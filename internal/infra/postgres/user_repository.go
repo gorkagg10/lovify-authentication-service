@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"log/slog"
 
 	autherrors "github.com/gorkagg10/lovify-authentication-service/errors"
 	"github.com/gorkagg10/lovify-authentication-service/internal/domain/login"
@@ -26,9 +27,10 @@ func (u *UserRepository) UsernameExists(ctx context.Context, username string) (b
 		if errors.Is(err, sql.ErrNoRows) {
 			return false, nil
 		}
-		return false, autherrors.ErrUserAlreadyExists
+		slog.Error("checking if username exists", slog.String("errors", err.Error()))
+		return false, autherrors.ErrDatabaseQueryFailed
 	}
-	return true, nil
+	return true, autherrors.ErrUserAlreadyExists
 }
 
 func (u *UserRepository) GetUser(ctx context.Context, username string) (*login.User, error) {
@@ -51,7 +53,8 @@ func (u *UserRepository) CreateUser(ctx context.Context, user *login.User) error
 		`INSERT INTO users (username, password)
 				VALUES($1, $2)
 				RETURNING id;`, user.Username(), user.HashedPassword()).Scan(&userID); err != nil {
-		return fmt.Errorf("inserting new user in database: %w", err)
+		slog.Error("inserting user in database", slog.String("error", err.Error()))
+		return autherrors.ErrDatabaseQueryFailed
 	}
 	return nil
 }

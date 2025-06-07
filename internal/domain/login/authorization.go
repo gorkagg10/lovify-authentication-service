@@ -32,18 +32,18 @@ func NewAuthorization(
 func (a *Authorization) Register(ctx context.Context, username string, password string) error {
 	exists, err := a.userRepository.UsernameExists(ctx, username)
 	if err != nil {
-		return fmt.Errorf("checking if user exists: %w", err)
+		return err
 	}
 	if exists {
-		return err
+		return errors.New("username already exists")
 	}
 	hashedPassword, err := a.securityRepository.HashPassword(password)
 	if err != nil {
-		return fmt.Errorf("hashing password: %w", err)
+		return err
 	}
 	user := NewUser(username, hashedPassword)
 	if err = a.userRepository.CreateUser(ctx, user); err != nil {
-		return fmt.Errorf("storing user: %w", err)
+		return err
 	}
 	return nil
 }

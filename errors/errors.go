@@ -6,11 +6,17 @@ import (
 )
 
 const (
-	ErrUserAlreadyExistsMsg = "USER_ALREADY_EXISTS"
+	ErrUserAlreadyExistsMsg              = "USER_ALREADY_EXISTS"
+	ErrDatabaseQueryFailedMsg            = "DATABASE_QUERY_FAILED"
+	ErrHashedPasswordGenerationFailedMsg = "HASHED_PASSWORD_GENERATION_FAILED"
 )
 
 var (
-	StatusUserAlreadyExists = status.New(codes.InvalidArgument, ErrUserAlreadyExistsMsg)
+	StatusUserAlreadyExists              = status.New(codes.InvalidArgument, ErrUserAlreadyExistsMsg)
+	StatusDatabaseQueryFailed            = status.New(codes.Internal, ErrDatabaseQueryFailedMsg)
+	StatusHashedPasswordGenerationFailed = status.New(codes.Internal, ErrHashedPasswordGenerationFailedMsg)
 
-	ErrUserAlreadyExists = StatusUserAlreadyExists.Err()
+	ErrUserAlreadyExists              = StatusUserAlreadyExists.Err()
+	ErrDatabaseQueryFailed            = StatusDatabaseQueryFailed.Err()
+	ErrHashedPasswordGenerationFailed = StatusHashedPasswordGenerationFailed.Err()
 )

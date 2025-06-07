@@ -3,6 +3,7 @@ package base64
 import (
 	"crypto/rand"
 	"encoding/base64"
+	autherrors "github.com/gorkagg10/lovify-authentication-service/errors"
 	"github.com/gorkagg10/lovify-authentication-service/internal/domain/login"
 	"log/slog"
 	"time"
@@ -22,7 +23,8 @@ func NewSecurityRepository() *SecurityRepository {
 func (t *SecurityRepository) HashPassword(password string) (string, error) {
 	passwordBytes, err := bcrypt.GenerateFromPassword([]byte(password), 10)
 	if err != nil {
-		return "", err
+		slog.Error("generating hashed password", slog.String("error", err.Error()))
+		return "", autherrors.ErrHashedPasswordGenerationFailed
 	}
 	return string(passwordBytes), nil
 }
