@@ -35,7 +35,7 @@ func (a *Authorization) Register(ctx context.Context, username string, password 
 		return fmt.Errorf("checking if user exists: %w", err)
 	}
 	if exists {
-		return fmt.Errorf("user already exists")
+		return err
 	}
 	hashedPassword, err := a.securityRepository.HashPassword(password)
 	if err != nil {
