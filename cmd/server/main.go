@@ -4,9 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/gorkagg10/lovify-authentication-service/config"
-	"github.com/gorkagg10/lovify-authentication-service/database"
-	"github.com/gorkagg10/lovify-authentication-service/internal/infra/postgres"
 	"log/slog"
 	"net"
 	"os"
@@ -15,9 +12,12 @@ import (
 
 	"google.golang.org/grpc"
 
+	"github.com/gorkagg10/lovify-authentication-service/config"
+	"github.com/gorkagg10/lovify-authentication-service/database"
 	service "github.com/gorkagg10/lovify-authentication-service/grpc/auth-service"
 	"github.com/gorkagg10/lovify-authentication-service/internal/domain/login"
 	"github.com/gorkagg10/lovify-authentication-service/internal/infra/base64"
+	"github.com/gorkagg10/lovify-authentication-service/internal/infra/postgres"
 	"github.com/gorkagg10/lovify-authentication-service/internal/infra/server"
 )
 

@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+
+	autherrors "github.com/gorkagg10/lovify-authentication-service/errors"
 	"github.com/gorkagg10/lovify-authentication-service/internal/domain/login"
 )
 
@@ -24,7 +26,7 @@ func (u *UserRepository) UsernameExists(ctx context.Context, username string) (b
 		if errors.Is(err, sql.ErrNoRows) {
 			return false, nil
 		}
-		return false, fmt.Errorf("checking if user exists: %w", err)
+		return false, autherrors.ErrUserAlreadyExists
 	}
 	return true, nil
 }
