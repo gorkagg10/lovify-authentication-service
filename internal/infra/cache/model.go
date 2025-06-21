@@ -3,21 +3,21 @@ package cache
 import "time"
 
 type User struct {
-	username       string
+	email          string
 	hashedPassword string
 }
 
 func NewUser(
-	username string,
+	email string,
 	hashedPassword string) *User {
 	return &User{
-		username:       username,
+		email:          email,
 		hashedPassword: hashedPassword,
 	}
 }
 
-func (u *User) Username() string {
-	return u.username
+func (u *User) Email() string {
+	return u.email
 }
 
 func (u *User) HashedPassword() string {
@@ -27,13 +27,13 @@ func (u *User) HashedPassword() string {
 type Token struct {
 	token          string
 	expirationDate time.Time
-	username       string
+	email          string
 }
 
-func NewToken(token string, expirationDate time.Time, username string) *Token {
+func NewToken(token string, expirationDate time.Time, email string) *Token {
 	return &Token{
 		token:          token,
 		expirationDate: expirationDate,
-		username:       username,
+		email:          email,
 	}
 }

@@ -2,13 +2,13 @@ package server
 
 import (
 	"context"
-	"github.com/gorkagg10/lovify-authentication-service/util"
-	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"google.golang.org/protobuf/types/known/emptypb"
+	"google.golang.org/protobuf/types/known/timestamppb"
 
 	authServiceGrpc "github.com/gorkagg10/lovify-authentication-service/grpc/auth-service"
 	"github.com/gorkagg10/lovify-authentication-service/internal/domain/login"
+	"github.com/gorkagg10/lovify-authentication-service/util"
 )
 
 type AuthServer struct {
@@ -23,7 +23,7 @@ func NewAuthServer(authenticationService *login.Authorization) *AuthServer {
 }
 
 func (s *AuthServer) RegisterUser(ctx context.Context, req *authServiceGrpc.RegisterRequest) (*emptypb.Empty, error) {
-	err := s.authenticationService.Register(ctx, req.GetUsername(), req.GetPassword())
+	err := s.authenticationService.Register(ctx, req.GetEmail(), req.GetPassword())
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +31,7 @@ func (s *AuthServer) RegisterUser(ctx context.Context, req *authServiceGrpc.Regi
 }
 
 func (s *AuthServer) Login(ctx context.Context, req *authServiceGrpc.LoginRequest) (*authServiceGrpc.LoginResponse, error) {
-	user, err := s.authenticationService.Login(ctx, req.GetUsername(), req.GetPassword())
+	user, err := s.authenticationService.Login(ctx, req.GetEmail(), req.GetPassword())
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func (s *AuthServer) Login(ctx context.Context, req *authServiceGrpc.LoginReques
 }
 
 func (s *AuthServer) Authorize(ctx context.Context, req *authServiceGrpc.AuthorizationRequest) (*emptypb.Empty, error) {
-	err := s.authenticationService.AuthorizeUser(ctx, req.GetUsername(), req.GetSessionToken(), req.GetCsrfToken())
+	err := s.authenticationService.AuthorizeUser(ctx, req.GetEmail(), req.GetSessionToken(), req.GetCsrfToken())
 	if err != nil {
 		return nil, err
 	}

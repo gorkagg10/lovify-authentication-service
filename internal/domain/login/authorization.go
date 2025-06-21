@@ -29,27 +29,27 @@ func NewAuthorization(
 	}
 }
 
-func (a *Authorization) Register(ctx context.Context, username string, password string) error {
-	exists, err := a.userRepository.UsernameExists(ctx, username)
+func (a *Authorization) Register(ctx context.Context, email string, password string) error {
+	exists, err := a.userRepository.EmailExists(ctx, email)
 	if err != nil {
 		return err
 	}
 	if exists {
-		return errors.New("username already exists")
+		return errors.New("email already exists")
 	}
 	hashedPassword, err := a.securityRepository.HashPassword(password)
 	if err != nil {
 		return err
 	}
-	user := NewUser(username, hashedPassword)
+	user := NewUser(email, hashedPassword)
 	if err = a.userRepository.CreateUser(ctx, user); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (a *Authorization) Login(ctx context.Context, username string, password string) (*User, error) {
-	user, err := a.userRepository.GetUser(ctx, username)
+func (a *Authorization) Login(ctx context.Context, email string, password string) (*User, error) {
+	user, err := a.userRepository.GetUser(ctx, email)
 	if err != nil {
 		return nil, fmt.Errorf("getting user: %w", err)
 	}
@@ -66,7 +66,7 @@ func (a *Authorization) Login(ctx context.Context, username string, password str
 	if err != nil {
 		return nil, fmt.Errorf("generating session token: %w", err)
 	}
-	err = a.tokenRepository.StoreToken(ctx, sessionToken, username)
+	err = a.tokenRepository.StoreToken(ctx, sessionToken, email)
 	if err != nil {
 		return nil, fmt.Errorf("storing session token: %w", err)
 	}
@@ -76,7 +76,7 @@ func (a *Authorization) Login(ctx context.Context, username string, password str
 	if err != nil {
 		return nil, fmt.Errorf("generating session token: %w", err)
 	}
-	err = a.tokenRepository.StoreToken(ctx, csrfToken, username)
+	err = a.tokenRepository.StoreToken(ctx, csrfToken, email)
 	if err != nil {
 		return nil, fmt.Errorf("storing csrf token: %w", err)
 	}
@@ -92,15 +92,15 @@ func isValidToken(userToken *Token) bool {
 	return true
 }
 
-func (a *Authorization) AuthorizeUser(ctx context.Context, username string, sessionToken string, csrfToken string) error {
-	dbSessionToken, err := a.tokenRepository.GetToken(ctx, sessionToken, SessionToken, username)
+func (a *Authorization) AuthorizeUser(ctx context.Context, email string, sessionToken string, csrfToken string) error {
+	dbSessionToken, err := a.tokenRepository.GetToken(ctx, sessionToken, SessionToken, email)
 	if err != nil {
 		return fmt.Errorf("getting session token: %w", err)
 	}
 	if !isValidToken(dbSessionToken) {
 		return errors.New("invalid session token")
 	}
-	dbCSRFToken, err := a.tokenRepository.GetToken(ctx, csrfToken, CSRFToken, username)
+	dbCSRFToken, err := a.tokenRepository.GetToken(ctx, csrfToken, CSRFToken, email)
 	if !isValidToken(dbCSRFToken) {
 		return errors.New("invalid csrf token")
 	}

@@ -25,7 +25,7 @@ const (
 
 type RegisterRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      *string                `protobuf:"bytes,1,opt,name=username" json:"username,omitempty"`
+	Email         *string                `protobuf:"bytes,1,opt,name=email" json:"email,omitempty"`
 	Password      *string                `protobuf:"bytes,2,opt,name=password" json:"password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -61,9 +61,9 @@ func (*RegisterRequest) Descriptor() ([]byte, []int) {
 	return file_grpc_auth_service_auth_service_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *RegisterRequest) GetUsername() string {
-	if x != nil && x.Username != nil {
-		return *x.Username
+func (x *RegisterRequest) GetEmail() string {
+	if x != nil && x.Email != nil {
+		return *x.Email
 	}
 	return ""
 }
@@ -77,7 +77,7 @@ func (x *RegisterRequest) GetPassword() string {
 
 type LoginRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      *string                `protobuf:"bytes,1,opt,name=username" json:"username,omitempty"`
+	Email         *string                `protobuf:"bytes,1,opt,name=email" json:"email,omitempty"`
 	Password      *string                `protobuf:"bytes,2,opt,name=password" json:"password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -113,9 +113,9 @@ func (*LoginRequest) Descriptor() ([]byte, []int) {
 	return file_grpc_auth_service_auth_service_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *LoginRequest) GetUsername() string {
-	if x != nil && x.Username != nil {
-		return *x.Username
+func (x *LoginRequest) GetEmail() string {
+	if x != nil && x.Email != nil {
+		return *x.Email
 	}
 	return ""
 }
@@ -233,7 +233,7 @@ func (x *Token) GetExpirationDate() *timestamppb.Timestamp {
 
 type AuthorizationRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      *string                `protobuf:"bytes,1,opt,name=username" json:"username,omitempty"`
+	Email         *string                `protobuf:"bytes,1,opt,name=email" json:"email,omitempty"`
 	SessionToken  *string                `protobuf:"bytes,2,opt,name=sessionToken" json:"sessionToken,omitempty"`
 	CsrfToken     *string                `protobuf:"bytes,3,opt,name=csrfToken" json:"csrfToken,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -270,9 +270,9 @@ func (*AuthorizationRequest) Descriptor() ([]byte, []int) {
 	return file_grpc_auth_service_auth_service_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *AuthorizationRequest) GetUsername() string {
-	if x != nil && x.Username != nil {
-		return *x.Username
+func (x *AuthorizationRequest) GetEmail() string {
+	if x != nil && x.Email != nil {
+		return *x.Email
 	}
 	return ""
 }
@@ -295,21 +295,21 @@ var File_grpc_auth_service_auth_service_proto protoreflect.FileDescriptor
 
 const file_grpc_auth_service_auth_service_proto_rawDesc = "" +
 	"\n" +
-	"$grpc/auth-service/auth-service.proto\x12\x13lovify_auth_service\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"I\n" +
-	"\x0fRegisterRequest\x12\x1a\n" +
-	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"F\n" +
-	"\fLoginRequest\x12\x1a\n" +
-	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
+	"$grpc/auth-service/auth-service.proto\x12\x13lovify_auth_service\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"C\n" +
+	"\x0fRegisterRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"@\n" +
+	"\fLoginRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\"\x89\x01\n" +
 	"\rLoginResponse\x12>\n" +
 	"\fsessionToken\x18\x01 \x01(\v2\x1a.lovify_auth_service.TokenR\fsessionToken\x128\n" +
 	"\tcsrfToken\x18\x02 \x01(\v2\x1a.lovify_auth_service.TokenR\tcsrfToken\"a\n" +
 	"\x05Token\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12B\n" +
-	"\x0eexpirationDate\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0eexpirationDate\"t\n" +
-	"\x14AuthorizationRequest\x12\x1a\n" +
-	"\busername\x18\x01 \x01(\tR\busername\x12\"\n" +
+	"\x0eexpirationDate\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0eexpirationDate\"n\n" +
+	"\x14AuthorizationRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\x12\"\n" +
 	"\fsessionToken\x18\x02 \x01(\tR\fsessionToken\x12\x1c\n" +
 	"\tcsrfToken\x18\x03 \x01(\tR\tcsrfToken2\xfb\x01\n" +
 	"\vAuthService\x12L\n" +
@@ -345,10 +345,10 @@ var file_grpc_auth_service_auth_service_proto_depIdxs = []int32{
 	5, // 2: lovify_auth_service.Token.expirationDate:type_name -> google.protobuf.Timestamp
 	0, // 3: lovify_auth_service.AuthService.RegisterUser:input_type -> lovify_auth_service.RegisterRequest
 	1, // 4: lovify_auth_service.AuthService.Login:input_type -> lovify_auth_service.LoginRequest
-	4, // 5: lovify_auth_service.AuthService.AuthorizeUser:input_type -> lovify_auth_service.AuthorizationRequest
+	4, // 5: lovify_auth_service.AuthService.Authorize:input_type -> lovify_auth_service.AuthorizationRequest
 	6, // 6: lovify_auth_service.AuthService.RegisterUser:output_type -> google.protobuf.Empty
 	2, // 7: lovify_auth_service.AuthService.Login:output_type -> lovify_auth_service.LoginResponse
-	6, // 8: lovify_auth_service.AuthService.AuthorizeUser:output_type -> google.protobuf.Empty
+	6, // 8: lovify_auth_service.AuthService.Authorize:output_type -> google.protobuf.Empty
 	6, // [6:9] is the sub-list for method output_type
 	3, // [3:6] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name

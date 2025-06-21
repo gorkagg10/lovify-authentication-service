@@ -3,5 +3,5 @@ CREATE TABLE tokens(
     token text NOT NULL,
     type token_type NOT NULL,
     expiration_date varchar(50),
-    username varchar(32) references users(username)
+    email text references users(email)
 );

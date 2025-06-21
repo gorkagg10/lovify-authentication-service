@@ -3,8 +3,8 @@ package login
 import "context"
 
 type UserRepository interface {
-	UsernameExists(context context.Context, username string) (bool, error)
-	GetUser(context context.Context, username string) (*User, error)
+	EmailExists(context context.Context, email string) (bool, error)
+	GetUser(context context.Context, email string) (*User, error)
 	CreateUser(context context.Context, user *User) error
 }
 
@@ -15,6 +15,6 @@ type SecurityRepository interface {
 }
 
 type TokenRepository interface {
-	StoreToken(ctx context.Context, token *Token, username string) error
-	GetToken(ctx context.Context, token string, tokenType string, username string) (*Token, error)
+	StoreToken(ctx context.Context, token *Token, email string) error
+	GetToken(ctx context.Context, token string, tokenType string, email string) (*Token, error)
 }

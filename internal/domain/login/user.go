@@ -2,21 +2,21 @@ package login
 
 type User struct {
 	id             string
-	username       string
+	email          string
 	hashedPassword string
 	sessionToken   *Token
 	csrfToken      *Token
 }
 
-func NewUser(username string, hashedPassword string) *User {
+func NewUser(email string, hashedPassword string) *User {
 	return &User{
-		username:       username,
+		email:          email,
 		hashedPassword: hashedPassword,
 	}
 }
 
-func (u *User) Username() string {
-	return u.username
+func (u *User) Email() string {
+	return u.email
 }
 
 func (u *User) HashedPassword() string {

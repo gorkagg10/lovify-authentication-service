@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	autherrors "github.com/gorkagg10/lovify-authentication-service/errors"
+	"log/slog"
 	"time"
 
 	"github.com/gorkagg10/lovify-authentication-service/internal/domain/login"
@@ -20,24 +22,25 @@ func NewTokenRepository(pgClient *sql.DB) *TokenRepository {
 	}
 }
 
-func (t *TokenRepository) StoreToken(ctx context.Context, token *login.Token, username string) error {
+func (t *TokenRepository) StoreToken(ctx context.Context, token *login.Token, email string) error {
 	var tokenID int64
 	if err := t.pgClient.QueryRowContext(
 		ctx,
-		`INSERT INTO tokens (token, type, expiration_date, username) 
+		`INSERT INTO tokens (token, type, expiration_date, email) 
 				VALUES ($1, $2, $3, $4)
-				RETURNING id;`, token.Token(), token.TokenType(), token.ExpirationDate().String(), username).Scan(&tokenID); err != nil {
-		return fmt.Errorf("inserting new user in database: %w", err)
+				RETURNING id;`, token.Token(), token.TokenType(), token.ExpirationDate().String(), email).Scan(&tokenID); err != nil {
+		slog.Error("inserting token into database", slog.String("error", err.Error()))
+		return autherrors.ErrDatabaseQueryFailed
 	}
 	return nil
 }
 
-func (t *TokenRepository) GetToken(ctx context.Context, token string, tokenType string, username string) (*login.Token, error) {
+func (t *TokenRepository) GetToken(ctx context.Context, token string, tokenType string, email string) (*login.Token, error) {
 	var dbToken Token
 	if err := t.pgClient.QueryRowContext(
 		ctx,
-		`SELECT token, token_type, expiration_date, username from tokens WHERE token = $1, token_type = $2, username = $3;`,
-		token, tokenType, username,
+		`SELECT token, token_type, expiration_date, email from tokens WHERE token = $1, token_type = $2, email = $3;`,
+		token, tokenType, email,
 	).Scan(&dbToken); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, errors.New("token not found")

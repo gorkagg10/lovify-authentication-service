@@ -42,7 +42,8 @@ func (t *SecurityRepository) GenerateToken(tokenType string) (*login.Token, erro
 func (t *SecurityRepository) CheckPassword(hashedPassword string, password string) (bool, error) {
 	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 	if err != nil {
-		return false, err
+		slog.Error("checking password", slog.String("error", err.Error()))
+		return false, autherrors.ErrIncorrectPassword
 	}
 	return true, nil
 }
